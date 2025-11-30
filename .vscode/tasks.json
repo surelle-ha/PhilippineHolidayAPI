@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run",
+      "type": "shell",
+      "command": "cargo run",
+      "problemMatcher": []
+    },
+    {
+      "label": "Build Release",
+      "type": "shell",
+      "command": "cargo build --release",
+      "problemMatcher": []
+    },
+    {
+      "label": "Show ToDo List",
+      "type": "shell",
+      "command": "grep -Rn \"// TODO\" src/",
+      "problemMatcher": []
+    }
+  ]
+}
