@@ -21,6 +21,7 @@ impl HScraper {
         HScraper { year }
     }
 
+    #[allow(unused)]
     pub async fn get_holidays(&self) -> Result<Vec<Holiday>, Box<dyn std::error::Error>> {
         let url = format!(
             "https://www.officialgazette.gov.ph/nationwide-holidays/{}/",

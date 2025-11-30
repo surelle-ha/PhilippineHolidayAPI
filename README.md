@@ -1,4 +1,4 @@
-# ⭕ Philippine Holiday API
+# 📅 Philippine Holiday API
 
 [![🦀 Rust Build and Test](https://github.com/surelle-ha/PhilippineHolidayAPI/actions/workflows/build-test.yml/badge.svg)](https://github.com/surelle-ha/PhilippineHolidayAPI/actions/workflows/build-test.yml)
 [![📦 Dependency Check](https://github.com/surelle-ha/PhilippineHolidayAPI/actions/workflows/deps-check.yml/badge.svg)](https://github.com/surelle-ha/PhilippineHolidayAPI/actions/workflows/deps-check.yml)
@@ -7,13 +7,14 @@ Originally built using Python and Flask, this project has been completely rewrit
 improved performance and reliability.
 
 This API provides information about Philippine holidays, including regular holidays, special non-working days, and more.
-It is designed to be fast, efficient, and easy to use.
+The data is scraped from official government sources to ensure accuracy and up-to-date information.
+
 
 > 🧪 **Note**: This project is currently in beta. While it is functional, there may be bugs or incomplete features. Use at your own risk. Please report any issues or feature requests on the GitHub repository. Contributions are welcome!
 
 > View Change Log [here](./CHANGELOG.md).
 
-## API Endpoints
+## ⭕ API Endpoints
 
 - `GET /health`: Health check endpoint to verify the API is running.
 - `POST /holiday/{year}`: Scrape and store holidays for the specified year. This may take some time as it fetches data
@@ -23,10 +24,11 @@ It is designed to be fast, efficient, and easy to use.
 - `PUT /holiday/{year}`: Update holidays for the specified year. This will re-scrape the data and update the stored
   information.
 
-## To Do List
+## ⭕ To Do List
 
 - [ ] Fix Dockerfile to use multi-stage builds for smaller image sizes
 - [ ] Add [`Render`](https://dashboard.render.com/blueprint/new) integration
+- [ ] Use SSE for long-running tasks like generating holidays
 - [ ] Disable direct push to `main` branch
 - [ ] Microservice Event Emitter integration (Port: 1212)
 - [ ] Implement rate limiting
@@ -37,7 +39,7 @@ It is designed to be fast, efficient, and easy to use.
 - [ ] Improve API documentation with examples
 - [ ] Implement Caching for frequently accessed data
 
-## Development Instructions
+## ⭕ Development Instructions
 
 This project uses `cargo-make` to streamline development tasks. Below are the common commands you can use.
 
@@ -82,10 +84,21 @@ cargo make deploy-local          # Clean deploy locally
 cargo make api-test-health
 ```
 
-## Technical Information
+## ⭕ Technical Information
 
 Here are some technical details about the project:
 
 ### Allowed Advisories
 - **Critical:** "RUSTSEC-2020-0071"
 - **Warning:** "RUSTSEC-2024-0436", "RUSTSEC-2025-0057"
+
+### Known Issues
+
+- Long response times when scraping holidays for the first time due to external data fetching.
+- Returning empty results on Render Web Services. - Render Docker untested yet.
+
+### Public Deployment
+
+For general use, this service is publicly available, and the API is deployed at the following URL:
+> ❗ **Note**: This is a free service and may have usage limitations. For production use, consider deploying your own instance, or you may sponsor the project.
+- [https://philippineholidayapi.onrender.com/](https://philippineholidayapi.onrender.com/)
