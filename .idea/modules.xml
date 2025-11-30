@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/holiday-checker.iml" filepath="$PROJECT_DIR$/.idea/holiday-checker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/PhilippineHolidayAPI.iml" filepath="$PROJECT_DIR$/.idea/PhilippineHolidayAPI.iml" />
     </modules>
   </component>
 </project>

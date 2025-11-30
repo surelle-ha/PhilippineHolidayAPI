@@ -1,10 +1,14 @@
-# Philippine Holiday API
+# ⭕ Philippine Holiday API
+
+[![🦀 Rust Build and Test](https://github.com/surelle-ha/PhilippineHolidayAPI/actions/workflows/build-test.yml/badge.svg)](https://github.com/surelle-ha/PhilippineHolidayAPI/actions/workflows/build-test.yml)
 
 Originally built using Python and Flask, this project has been completely rewritten in Rust using the Axum framework for
 improved performance and reliability.
 
 This API provides information about Philippine holidays, including regular holidays, special non-working days, and more.
 It is designed to be fast, efficient, and easy to use.
+
+> 🧪 **Note**: This project is currently in beta. While it is functional, there may be bugs or incomplete features. Use at your own risk. Please report any issues or feature requests on the GitHub repository. Contributions are welcome!
 
 ## API Endpoints
 
@@ -18,6 +22,7 @@ It is designed to be fast, efficient, and easy to use.
 
 ## To Do List
 
+- [ ] Disable direct push to `main` branch
 - [ ] Microservice Event Emitter integration (Port: 1212)
 - [ ] Fix Dockerfile to use multi-stage builds for smaller image sizes
 - [ ] Implement rate limiting
@@ -28,7 +33,11 @@ It is designed to be fast, efficient, and easy to use.
 - [ ] Improve API documentation with examples
 - [ ] Implement Caching for frequently accessed data
 
-## Development setup
+## Development Instructions
+
+This project uses `cargo-make` to streamline development tasks. Below are the common commands you can use.
+
+### Development setup
 
 ```
 cargo make dev-setup              # Complete dev environment setup
@@ -36,7 +45,7 @@ cargo make dev                    # Start dev environment
 cargo make watch                  # Watch and auto-rebuild
 ```
 
-## Building
+### Building
 
 ```
 cargo make build                  # Debug build
@@ -44,7 +53,7 @@ cargo make bin-build             # Release build
 cargo make release-build         # Release + Docker image
 ```
 
-## Testing
+### Testing
 
 ```
 cargo make test                   # Run tests
@@ -52,7 +61,7 @@ cargo make test-watch            # Watch tests
 cargo make ci                    # Run all CI checks
 ```
 
-## Docker
+### Docker
 
 ```
 cargo make docker-build          # Build Docker image
@@ -63,7 +72,7 @@ cargo make docker-full           # Full Docker workflow
 cargo make deploy-local          # Clean deploy locally
 ```
 
-## API Testing
+### API Testing
 
 ```
 cargo make api-test-health
