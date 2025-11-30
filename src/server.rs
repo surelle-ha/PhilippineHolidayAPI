@@ -46,10 +46,10 @@ impl Server {
         let app = Router::new()
             .route("/", get(home))
             .route("/health", get(health_check))
-            .route("/holiday/:year", post(scrape_holiday))
-            .route("/holiday/:year", get(get_holidays))
-            .route("/holiday/:year", delete(delete_snapshot))
-            .route("/holiday/:year", put(update_snapshot))
+            .route("/holiday/{year}", post(scrape_holiday))
+            .route("/holiday/{year}", get(get_holidays))
+            .route("/holiday/{year}", delete(delete_snapshot))
+            .route("/holiday/{year}", put(update_snapshot))
             .layer(CorsLayer::permissive());
 
         let addr: SocketAddr = self.address().parse()?;

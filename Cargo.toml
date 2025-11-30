@@ -9,7 +9,6 @@ scraper = "0.24.0"
 tokio = "1.48.0"
 serde_json = "1.0.145"
 serde = { version = "1.0", features = ["derive"] }
-axum = "0.7"
-tower = "0.4"
-tower-http = { version = "0.5", features = ["cors"] }
+axum = "0.8.7"
+tower-http = { version = "0.6.7", features = ["cors"] }
 http = "1.4.0"
