@@ -1,5 +1,0 @@
-[allow]
-unmaintained = true # Allow all unmaintained crates
-
-# Allow advisory IDs:
-RUSTSEC-2020-0071 = true

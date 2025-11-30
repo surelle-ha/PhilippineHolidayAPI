@@ -10,6 +10,8 @@ It is designed to be fast, efficient, and easy to use.
 
 > 🧪 **Note**: This project is currently in beta. While it is functional, there may be bugs or incomplete features. Use at your own risk. Please report any issues or feature requests on the GitHub repository. Contributions are welcome!
 
+> View Change Log [here](./CHANGELOG.md).
+
 ## API Endpoints
 
 - `GET /health`: Health check endpoint to verify the API is running.
@@ -78,3 +80,11 @@ cargo make deploy-local          # Clean deploy locally
 ```
 cargo make api-test-health
 ```
+
+## Technical Information
+
+Here are some technical details about the project:
+
+### Allowed Advisories
+- **Critical:** "RUSTSEC-2020-0071"
+- **Warning:** "RUSTSEC-2024-0436", "RUSTSEC-2025-0057"

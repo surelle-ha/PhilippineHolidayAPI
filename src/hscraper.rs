@@ -173,7 +173,7 @@ impl HScraper {
 
     pub fn delete_snapshot(&self) -> Result<(), std::io::Error> {
         let filename = format!("snapshots/holidays_{}.html", self.year);
-        std::fs::remove_file(&filename)?;
+        fs::remove_file(&filename)?;
         Ok(())
     }
 }

@@ -1,0 +1,10 @@
+[advisories]
+ignore = ["RUSTSEC-2020-0071", "RUSTSEC-2024-0436", "RUSTSEC-2025-0057"]
+informational_warnings = ["unmaintained"]
+severity_threshold = "low"
+
+[database]
+path = "~/.cargo/advisory-db"
+url = "https://github.com/RustSec/advisory-db.git"
+fetch = true
+stale = false

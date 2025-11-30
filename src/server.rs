@@ -217,17 +217,17 @@ async fn update_snapshot(
     let scraper = HScraper::new(year);
 
     // Delete existing snapshot if it exists
-    if scraper.snapshot_exists() {
-        if let Err(e) = scraper.delete_snapshot() {
-            return Err((
-                StatusCode::INTERNAL_SERVER_ERROR,
-                Json(ApiResponse {
-                    success: false,
-                    message: format!("Failed to delete existing snapshot: {}", e),
-                    data: None,
-                }),
-            ));
-        }
+    if scraper.snapshot_exists()
+        && let Err(e) = scraper.delete_snapshot()
+    {
+        return Err((
+            StatusCode::INTERNAL_SERVER_ERROR,
+            Json(ApiResponse {
+                success: false,
+                message: format!("Failed to delete existing snapshot: {}", e),
+                data: None,
+            }),
+        ));
     }
 
     // Create new snapshot

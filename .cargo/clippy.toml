@@ -1,0 +1,2 @@
+warns = ["clippy::unwrap_used"]
+allows = ["clippy::needless_return"]

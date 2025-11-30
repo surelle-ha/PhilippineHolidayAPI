@@ -1,4 +1,4 @@
-name: Dependency Check
+name: '📦 Dependency Check'
 
 on:
   push:
