@@ -10,6 +10,8 @@ It is designed to be fast, efficient, and easy to use.
 
 > 🧪 **Note**: This project is currently in beta. While it is functional, there may be bugs or incomplete features. Use at your own risk. Please report any issues or feature requests on the GitHub repository. Contributions are welcome!
 
+> ❗ Docker build script not ready yet. Please build using Cargo for now.
+
 ## API Endpoints
 
 - `GET /health`: Health check endpoint to verify the API is running.

@@ -1,9 +1,9 @@
 use axum::{
+    Router,
     extract::Path,
     http::StatusCode,
     response::Json,
-    routing::{get, post, delete, put},
-    Router,
+    routing::{delete, get, post, put},
 };
 use serde::{Deserialize, Serialize};
 use std::net::SocketAddr;
@@ -44,6 +44,7 @@ impl Server {
 
     pub async fn start(&self) -> Result<(), Box<dyn std::error::Error>> {
         let app = Router::new()
+            .route("/", get(home))
             .route("/health", get(health_check))
             .route("/holiday/:year", post(scrape_holiday))
             .route("/holiday/:year", get(get_holidays))
@@ -61,10 +62,18 @@ impl Server {
     }
 }
 
+async fn home() -> Json<ApiResponse<String>> {
+    Json(ApiResponse {
+        success: true,
+        message: "The Philippine Holiday Service is now ready. Refer to the documentation to get started: https://github.com/surelle-ha/PhilippineHolidayAPI".to_string(),
+        data: Some("OK".to_string()),
+    })
+}
+
 async fn health_check() -> Json<ApiResponse<String>> {
     Json(ApiResponse {
         success: true,
-        message: "Service is healthy".to_string(),
+        message: "Philippine Holiday Service is healthy".to_string(),
         data: Some("OK".to_string()),
     })
 }
@@ -81,7 +90,10 @@ async fn scrape_holiday(
             StatusCode::CONFLICT,
             Json(ApiResponse {
                 success: false,
-                message: format!("Snapshot for year {} already exists. Use PUT to update.", year),
+                message: format!(
+                    "Snapshot for year {} already exists. Use PUT to update.",
+                    year
+                ),
                 data: None,
             }),
         ));
@@ -107,7 +119,8 @@ async fn scrape_holiday(
 // GET /holiday/{year} - Parse and return the holidays
 async fn get_holidays(
     Path(year): Path<u32>,
-) -> Result<Json<ApiResponse<HolidaysResponse>>, (StatusCode, Json<ApiResponse<HolidaysResponse>>)> {
+) -> Result<Json<ApiResponse<HolidaysResponse>>, (StatusCode, Json<ApiResponse<HolidaysResponse>>)>
+{
     let scraper = HScraper::new(year);
 
     // Check if snapshot exists
@@ -116,7 +129,10 @@ async fn get_holidays(
             StatusCode::NOT_FOUND,
             Json(ApiResponse {
                 success: false,
-                message: format!("No snapshot found for year {}. Use POST to create one.", year),
+                message: format!(
+                    "No snapshot found for year {}. Use POST to create one.",
+                    year
+                ),
                 data: None,
             }),
         ));
@@ -129,7 +145,10 @@ async fn get_holidays(
                 let count = holidays.len();
                 Ok(Json(ApiResponse {
                     success: true,
-                    message: format!("Successfully retrieved {} holidays for year {}", count, year),
+                    message: format!(
+                        "Successfully retrieved {} holidays for year {}",
+                        count, year
+                    ),
                     data: Some(HolidaysResponse {
                         year,
                         holidays,
