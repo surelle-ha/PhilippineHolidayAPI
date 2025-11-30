@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  holiday-checker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: holiday-checker
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./snapshots:/app/snapshots
+      - playwright-cache:/app/.cache/ms-playwright
+    environment:
+      - RUST_LOG=info
+      - PLAYWRIGHT_BROWSERS_PATH=/app/.cache/ms-playwright
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  playwright-cache:

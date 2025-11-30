@@ -1,104 +1,70 @@
-# Official Gazette PH Holiday API
+# Philippine Holiday API
 
-This is a Python-based web server API developed using Flask. It's designed to scrape data about nationwide holidays from the "Official Gazette" website of the Philippines for the current year and return this information in a JSON format.
+Originally built using Python and Flask, this project has been completely rewritten in Rust using the Axum framework for
+improved performance and reliability.
 
-## Features
+This API provides information about Philippine holidays, including regular holidays, special non-working days, and more.
+It is designed to be fast, efficient, and easy to use.
 
-- Scraping holiday data from a Official Gazette PH.
-- Categorization of holidays into 'Regular' and 'Special (Non-Working)'.
-- Returning detailed JSON responses including event names, dates, and types.
-- Performance metrics such as request timestamp and response duration.
-- Error handling for unsuccessful data retrieval.
+## API Endpoints
 
-## Requirements
+- `GET /health`: Health check endpoint to verify the API is running.
+- `POST /holiday/{year}`: Scrape and store holidays for the specified year. This may take some time as it fetches data
+  from external sources.
+- `GET /holiday/{year}`: Retrieve stored holidays for the specified year.
+- `DELETE /holiday/{year}`: Delete stored holidays for the specified year.
+- `PUT /holiday/{year}`: Update holidays for the specified year. This will re-scrape the data and update the stored
+  information.
 
-- Python 3.x
-- Flask
-- Requests
-- BeautifulSoup4
+## To Do List
 
-## Deployment
+- [ ] Microservice Event Emitter integration (Port: 1212)
+- [ ] Fix Dockerfile to use multi-stage builds for smaller image sizes
+- [ ] Implement rate limiting
+- [ ] Add more comprehensive error handling and logging
+- [ ] Write unit and integration tests for all endpoints
+- [ ] Set up CI/CD pipeline for automated testing and deployment
+- [ ] Add response schema pattern on documentations
+- [ ] Improve API documentation with examples
+- [ ] Implement Caching for frequently accessed data
 
-### Tunnel Local via Ngrok (Optional)
+## Development setup
 
-Ngrok is a cross-platform tool that creates secure tunnels between your local development server and the internet, allowing you to expose locally hosted services to the web. It’s often used for testing and development purposes.
-
-##### 1. Download Ngrok
-
-[![Ngrok](https://img.shields.io/badge/Ngrok-purple?style=for-the-badge&logo=ngrok)](https://ngrok.com/download)
-
-##### 2. Register and get your Auth token
-
-##### 3. Run this script on your Ngrok directory.
-
-    ngrok config add-authtoken <token>
-
-##### 4. Start a tunnel
-
-    ngrok http <port>
-
-### Or Deploy via Render (Optional)
-
-Create an account on Render and setup environment variable before you click the button below.
-
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/surelle-ha/OfficialGazettePH-HolidayAPI.git)
-
-## Local Installation
-
-First, ensure you have Python 3.x installed. Then, clone the repository from Github.
-
-```git
-git clone https://github.com/surelle-ha/OfficialGazettePH-HolidayAPI.git
+```
+cargo make dev-setup              # Complete dev environment setup
+cargo make dev                    # Start dev environment
+cargo make watch                  # Watch and auto-rebuild
 ```
 
-Next, install the required packages using pip:
+## Building
 
-```bash
-pip install -r requirements.txt
+```
+cargo make build                  # Debug build
+cargo make bin-build             # Release build
+cargo make release-build         # Release + Docker image
 ```
 
-## Usage
+## Testing
 
-To start the web server, run the script:
-
-```bash
-python app.py
+```
+cargo make test                   # Run tests
+cargo make test-watch            # Watch tests
+cargo make ci                    # Run all CI checks
 ```
 
-Once the server is running, you can access the API endpoint /holidays via a GET request to receive the current year's holiday data.
+## Docker
 
-### Example Request:
-
-```bash
-GET /holidays
+```
+cargo make docker-build          # Build Docker image
+cargo make docker-run            # Run container
+cargo make docker-compose-up     # Start with compose
+cargo make docker-compose-down   # Stop compose
+cargo make docker-full           # Full Docker workflow
+cargo make deploy-local          # Clean deploy locally
 ```
 
-### Response Structure:
+## API Testing
 
-```json
-{
-  "request_timestamp": "YYYY-MM-DD HH:MM:SS",
-  "response_duration_seconds": X.XX,
-  "source_url": "URL",
-  "source_ip": "IP Address",
-  "number_of_holidays": X,
-  "holidays": [
-    {
-      "event": "Event Name",
-      "date": "YYYY-MM-DD",
-      "type": "Holiday Type"
-    },
-    ...
-  ]
-}
 ```
-
-## Configuration
-
-- The target URL for scraping is set to the Official Gazette's holiday page for the current year.
-- The Flask app runs in debug mode by default.
-
-## Notes
-
-- The web server scrapes data in real-time; response times may vary based on network conditions and the source website's response time.
-- This web server scrapes data from [Philippine Official Gazette](https://www.officialgazette.gov.ph/nationwide-holidays/)
+cargo make api-test-health
+```

@@ -1,0 +1,316 @@
+# ==========================
+# DEV PREPARE
+# ==========================
+[tasks.dev-prepare-linux]
+description = "Prepare development environment for Linux"
+script = [
+    "sudo apt update && sudo apt upgrade -y",
+    "sudo apt install -y build-essential pkg-config libssl-dev curl git",
+    "sudo apt install -y libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2",
+    "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y",
+    "source $HOME/.cargo/env"
+]
+
+[tasks.dev-prepare-docker]
+description = "Prepare Docker environment"
+script = [
+    "sudo apt update && sudo apt install -y docker.io docker-compose",
+    "sudo systemctl enable docker",
+    "sudo systemctl start docker",
+    "sudo usermod -aG docker $USER",
+    "echo 'Please log out and log back in for Docker group changes to take effect'"
+]
+
+# ==========================
+# BUILD TASKS
+# ==========================
+[tasks.build]
+description = "Clean and build debug version"
+script = [
+    "cargo clean",
+    "cargo build",
+]
+
+[tasks.bin-build]
+description = "Clean and build release version"
+script = [
+    "cargo clean",
+    "cargo build --release",
+]
+
+[tasks.run]
+description = "Run the application in debug mode"
+script = [
+    "cargo run"
+]
+
+[tasks.run-release]
+description = "Run the application in release mode"
+script = [
+    "cargo run --release"
+]
+
+# ==========================
+# TESTING
+# ==========================
+[tasks.test]
+description = "Run unit and integration tests"
+script = [
+    "cargo test"
+]
+
+[tasks.test-watch]
+description = "Watch tests (requires cargo-watch)"
+install_crate = "cargo-watch"
+script = [
+    "cargo watch -x test"
+]
+
+[tasks.test-verbose]
+description = "Run tests with verbose output"
+script = [
+    "cargo test -- --nocapture"
+]
+
+# ==========================
+# LINT & FORMAT
+# ==========================
+[tasks.format]
+description = "Format all Rust code using rustfmt"
+script = [
+    "cargo fmt"
+]
+
+[tasks.format-check]
+description = "Check if code is formatted correctly"
+script = [
+    "cargo fmt -- --check"
+]
+
+[tasks.lint]
+description = "Lint Rust code with clippy"
+script = [
+    "cargo clippy --all-targets --all-features -- -D warnings"
+]
+
+[tasks.check]
+description = "Run format check and lint"
+dependencies = [
+    "format-check",
+    "lint"
+]
+
+# ==========================
+# DOCKER TASKS
+# ==========================
+[tasks.docker-build]
+description = "Build Docker image for holiday-checker"
+script = [
+    "docker build -t holiday-checker:latest ."
+]
+
+[tasks.docker-run]
+description = "Run Docker container locally"
+script = [
+    "docker run --rm -p 3000:3000 -v $(pwd)/snapshots:/app/snapshots holiday-checker:latest"
+]
+
+[tasks.docker-stop]
+description = "Stop running Docker container"
+script = [
+    "docker stop $(docker ps -q --filter ancestor=holiday-checker:latest) || true"
+]
+
+[tasks.docker-clean]
+description = "Remove local Docker image"
+script = [
+    "docker rmi holiday-checker:latest || true"
+]
+
+[tasks.docker-compose-up]
+description = "Start services with docker-compose"
+script = [
+    "docker-compose up -d"
+]
+
+[tasks.docker-compose-down]
+description = "Stop services with docker-compose"
+script = [
+    "docker-compose down"
+]
+
+[tasks.docker-compose-build]
+description = "Build services with docker-compose"
+script = [
+    "docker-compose build"
+]
+
+[tasks.docker-compose-logs]
+description = "View docker-compose logs"
+script = [
+    "docker-compose logs -f"
+]
+
+[tasks.docker-compose-rebuild]
+description = "Rebuild and restart docker-compose services"
+script = [
+    "docker-compose down",
+    "docker-compose build --no-cache",
+    "docker-compose up -d"
+]
+
+# ==========================
+# CLEANUP TASKS
+# ==========================
+[tasks.clean]
+description = "Clean build artifacts"
+script = [
+    "cargo clean"
+]
+
+[tasks.clean-snapshots]
+description = "Remove all snapshot files"
+script = [
+    "rm -rf snapshots/*"
+]
+
+[tasks.clean-all]
+description = "Clean everything including Docker volumes"
+dependencies = [
+    "clean",
+    "clean-snapshots",
+    "docker-compose-down"
+]
+script = [
+    "docker-compose down -v",
+    "echo 'All cleaned up!'"
+]
+
+# ==========================
+# PLAYWRIGHT TASKS
+# ==========================
+[tasks.install-playwright]
+description = "Install Playwright browsers"
+script = [
+    "cargo run -- --install-browsers || true"
+]
+
+[tasks.prepare-snapshots]
+description = "Create snapshots directory"
+script = [
+    "mkdir -p snapshots"
+]
+
+# ==========================
+# API TESTING TASKS
+# ==========================
+[tasks.api-test-scrape]
+description = "Test scraping endpoint (POST /holiday/2024)"
+script = [
+    "curl -X POST http://localhost:3000/holiday/2024 | jq"
+]
+
+[tasks.api-test-get]
+description = "Test get holidays endpoint (GET /holiday/2024)"
+script = [
+    "curl http://localhost:3000/holiday/2024 | jq"
+]
+
+[tasks.api-test-update]
+description = "Test update endpoint (PUT /holiday/2024)"
+script = [
+    "curl -X PUT http://localhost:3000/holiday/2024 | jq"
+]
+
+[tasks.api-test-delete]
+description = "Test delete endpoint (DELETE /holiday/2024)"
+script = [
+    "curl -X DELETE http://localhost:3000/holiday/2024 | jq"
+]
+
+[tasks.api-test-health]
+description = "Test health check endpoint"
+script = [
+    "curl http://localhost:3000/health | jq"
+]
+
+# ==========================
+# COMBINED TASKS
+# ==========================
+[tasks.dev-setup]
+description = "Complete development setup"
+dependencies = [
+    "dev-prepare-linux",
+    "prepare-snapshots",
+    "build"
+]
+
+[tasks.dev-build]
+description = "Prepare environment and build daemon"
+dependencies = [
+    "prepare-snapshots",
+    "build"
+]
+
+[tasks.release-build]
+description = "Build release binary and Docker image"
+dependencies = [
+    "bin-build",
+    "docker-build"
+]
+
+[tasks.docker-full]
+description = "Full Docker workflow: build, run, and show logs"
+dependencies = [
+    "docker-compose-build",
+    "docker-compose-up"
+]
+script = [
+    "echo 'Waiting for service to start...'",
+    "sleep 5",
+    "docker-compose logs"
+]
+
+[tasks.ci]
+description = "Run CI checks (format, lint, test)"
+dependencies = [
+    "format-check",
+    "lint",
+    "test"
+]
+
+[tasks.deploy-local]
+description = "Deploy locally with Docker Compose"
+dependencies = [
+    "clean-all",
+    "docker-compose-build",
+    "docker-compose-up"
+]
+script = [
+    "echo 'Service deployed at http://localhost:3000'",
+    "echo 'Health check: http://localhost:3000/health'"
+]
+
+# ==========================
+# DEVELOPMENT WORKFLOW
+# ==========================
+[tasks.dev]
+description = "Start development environment"
+dependencies = [
+    "prepare-snapshots",
+    "run"
+]
+
+[tasks.dev-docker]
+description = "Start development environment with Docker"
+dependencies = [
+    "docker-compose-up",
+    "docker-compose-logs"
+]
+
+[tasks.watch]
+description = "Watch and rebuild on file changes"
+install_crate = "cargo-watch"
+script = [
+    "cargo watch -x 'run'"
+]
