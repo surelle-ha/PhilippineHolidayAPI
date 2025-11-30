@@ -1,0 +1,42 @@
+previews:
+  generation: automatic
+
+services:
+  - type: web
+    name: ph-holiday-api
+    runtime: docker
+    repo: https://github.com/surelle-ha/PhilippineHolidayAPI
+    rootDir: .
+    dockerfilePath: Dockerfile
+    buildCommand: docker build -t philippines-holiday-api:latest .
+    startCommand: /app/philippines-holiday-api
+    numInstances: 2
+    plan: standard
+    region: frankfurt
+    branch: main
+    envVars:
+      - key: RUST_LOG
+        value: info
+      - key: PLAYWRIGHT_BROWSERS_PATH
+        value: /app/.cache/ms-playwright
+    autoDeployTrigger: 'off'
+    maxShutdownDelaySeconds: 120
+    healthCheckPath: /health
+    # Optional IP allowlist
+    ipAllowList:
+      - source: 203.0.113.4/30
+        description: office
+      - source: 198.51.100.1
+        description: home
+    # Volumes (Render calls them Persistent Disks)
+    disks:
+      - name: snapshots
+        mountPath: /app/snapshots
+      - name: playwright-cache
+        mountPath: /app/.cache/ms-playwright
+
+disks:
+  - name: snapshots
+    sizeGB: 5
+  - name: playwright-cache
+    sizeGB: 2
