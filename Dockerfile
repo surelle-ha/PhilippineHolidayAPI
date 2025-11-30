@@ -1,34 +1,33 @@
 # Build stage
-FROM rustlang/rust:nightly-slim as builder
+FROM rustlang/rust:nightly-slim AS builder
 
-# Install build dependencies
 RUN apt-get update && apt-get install -y \
     pkg-config \
     libssl-dev \
+    clang \
+    libc++-dev \
+    libc++abi-dev \
+    libx11-dev \
+    libx11-xcb-dev \
+    libxcb1-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copy manifests
 COPY Cargo.toml Cargo.lock ./
 
-# Create a dummy main.rs to build dependencies
 RUN mkdir src && \
     echo "fn main() {}" > src/main.rs && \
-    cargo build --release && \
+    cargo build --release --target x86_64-unknown-linux-gnu && \
     rm -rf src
 
-# Copy source code
 COPY src ./src
 
-# Build the actual application
-RUN touch src/main.rs && \
-    cargo build --release
+RUN cargo build --release --target x86_64-unknown-linux-gnu
 
-# Runtime stage
-FROM debian:bookworm-slim
+# Runtime stage — MUST use same glibc version
+FROM debian:trixie-slim
 
-# Install runtime dependencies for Playwright/Chromium
 RUN apt-get update && apt-get install -y \
     wget \
     ca-certificates \
@@ -57,19 +56,12 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copy the binary from builder
-COPY --from=builder /app/target/release/holiday-checker /app/holiday-checker
+COPY --from=builder /app/target/x86_64-unknown-linux-gnu/release/philippines-holiday-api /app/philippines-holiday-api
 
-# Create snapshots directory
 RUN mkdir -p /app/snapshots
 
-# Set environment for Playwright
 ENV PLAYWRIGHT_BROWSERS_PATH=/app/.cache/ms-playwright
-
-# Install Playwright browsers during build (optional, can be done at runtime)
-# This makes the image larger but faster to start
-RUN /app/holiday-checker --version || true
 
 EXPOSE 3000
 
-CMD ["/app/holiday-checker"]
+CMD ["/app/philippines-holiday-api"]

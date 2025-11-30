@@ -1,6 +1,7 @@
 # ⭕ Philippine Holiday API
 
 [![🦀 Rust Build and Test](https://github.com/surelle-ha/PhilippineHolidayAPI/actions/workflows/build-test.yml/badge.svg)](https://github.com/surelle-ha/PhilippineHolidayAPI/actions/workflows/build-test.yml)
+[![📦 Dependency Check](https://github.com/surelle-ha/PhilippineHolidayAPI/actions/workflows/deps-check.yml/badge.svg)](https://github.com/surelle-ha/PhilippineHolidayAPI/actions/workflows/deps-check.yml)
 
 Originally built using Python and Flask, this project has been completely rewritten in Rust using the Axum framework for
 improved performance and reliability.
