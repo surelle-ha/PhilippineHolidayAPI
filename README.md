@@ -13,6 +13,25 @@ The data is scraped from official government sources to ensure accuracy and up-t
 
 > 🧪 **Note**: This project is currently in beta. While it is functional, there may be bugs or incomplete features. Use at your own risk. Please report any issues or feature requests on the GitHub repository. Contributions are welcome! View Change Log [here](./CHANGELOG.md).
 
+## Table of Contents
+- [API Endpoints](#api-endpoints)
+- [Custom Integrations](#custom-integrations)
+- [To Do List](#to-do-list)
+- [Development Instructions](#development-instructions)
+  - [Development setup](#development-setup)
+  - [Building](#building)
+  - [Testing](#testing)
+  - [Docker](#docker)
+  - [API Testing](#api-testing)
+- [Technical Information](#technical-information)
+  - [Allowed Advisories](#allowed-advisories)
+  - [Known Issues](#known-issues)
+  - [Public Deployment](#public-deployment)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [License](#license)
+
 ## ⭕ API Endpoints
 
 - `GET /health`: Health check endpoint to verify the API is running.
@@ -25,9 +44,9 @@ The data is scraped from official government sources to ensure accuracy and up-t
 
 ## ⭕ Custom Integrations 
 
-- **NestJS**: A NestJS module is available for easy integration into NestJS applications. Check out the [ph-government-api](https://github.com/surelle-ha/ph-government-api).
+- **Nest.js**: A NestJS module is available for easy integration into NestJS applications. Check out the [ph-government-api](https://github.com/surelle-ha/ph-government-api).
 - **Express.js**: An Express.js middleware is available for easy integration into Express.js applications. Check out the [ph-government-api](https://github.com/surelle-ha/ph-government-api)
-- **Event Emitter**: Integration with Microservice Event Emitter for event-driven architectures. Check out the [microservice-event-emitter](https://github.com/surelle-ha/ph-government-api)
+- ***Custom Event Emitter***: Integration with Microservice Event Emitter for event-driven architectures. Check out the [microservice-event-emitter](https://github.com/surelle-ha/ph-government-api)
 
 ## ⭕ To Do List
 
