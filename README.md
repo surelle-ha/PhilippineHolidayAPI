@@ -9,7 +9,7 @@ improved performance and reliability.
 This API provides information about Philippine holidays, including regular holidays, special non-working days, and more.
 The data is scraped from official government sources to ensure accuracy and up-to-date information.
 
-> 💠 This project is **not funded by any government and is entirely maintained by volunteers**. It is open-source and free to use. If you find it useful, please consider starring the repository or contributing to its development!
+> 💠 This project is ***not funded by any government and is entirely maintained by volunteers***. It is open-source and free to use. If you find it useful, please consider starring the repository or contributing to its development!
 
 > 🧪 **Note**: This project is currently in beta. While it is functional, there may be bugs or incomplete features. Use at your own risk. Please report any issues or feature requests on the GitHub repository. Contributions are welcome! View Change Log [here](./CHANGELOG.md).
 
@@ -38,7 +38,7 @@ The data is scraped from official government sources to ensure accuracy and up-t
 - `PUT /holiday/{year}`: Update holidays for the specified year. This will re-scrape the data and update the stored
   information.
 
-## Custom Integrations 
+## Custom Integrations
 
 - **Nest.js**: A NestJS module is available for easy integration into NestJS applications. Check out the [ph-government-api](https://github.com/surelle-ha/ph-government-api).
 - **Express.js**: An Express.js middleware is available for easy integration into Express.js applications. Check out the [ph-government-api](https://github.com/surelle-ha/ph-government-api)
