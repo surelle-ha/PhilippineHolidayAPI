@@ -13,7 +13,7 @@ The data is scraped from official government sources to ensure accuracy and up-t
 
 > 🧪 **Note**: This project is currently in beta. While it is functional, there may be bugs or incomplete features. Use at your own risk. Please report any issues or feature requests on the GitHub repository. Contributions are welcome! View Change Log [here](./CHANGELOG.md).
 
-## Table of Contents
+## 📃 Table of Contents
 - [API Endpoints](#api-endpoints)
 - [Custom Integrations](#custom-integrations)
 - [To Do List](#to-do-list)
@@ -27,12 +27,8 @@ The data is scraped from official government sources to ensure accuracy and up-t
   - [Allowed Advisories](#allowed-advisories)
   - [Known Issues](#known-issues)
   - [Public Deployment](#public-deployment)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Features](#features)
-- [License](#license)
 
-## ⭕ API Endpoints
+## API Endpoints
 
 - `GET /health`: Health check endpoint to verify the API is running.
 - `POST /holiday/{year}`: Scrape and store holidays for the specified year. This may take some time as it fetches data
@@ -42,13 +38,13 @@ The data is scraped from official government sources to ensure accuracy and up-t
 - `PUT /holiday/{year}`: Update holidays for the specified year. This will re-scrape the data and update the stored
   information.
 
-## ⭕ Custom Integrations 
+## Custom Integrations 
 
 - **Nest.js**: A NestJS module is available for easy integration into NestJS applications. Check out the [ph-government-api](https://github.com/surelle-ha/ph-government-api).
 - **Express.js**: An Express.js middleware is available for easy integration into Express.js applications. Check out the [ph-government-api](https://github.com/surelle-ha/ph-government-api)
 - ***Custom Event Emitter***: Integration with Microservice Event Emitter for event-driven architectures. Check out the [microservice-event-emitter](https://github.com/surelle-ha/ph-government-api)
 
-## ⭕ To Do List
+## To Do List
 
 - [x] Fix Dockerfile to use multi-stage builds for smaller image sizes
 - [x] Add [`Render`](https://dashboard.render.com/blueprint/new) integration
@@ -63,7 +59,7 @@ The data is scraped from official government sources to ensure accuracy and up-t
 - [ ] Improve API documentation with examples
 - [ ] Implement Caching for frequently accessed data
 
-## ⭕ Development Instructions
+## Development Instructions
 
 This project uses `cargo-make` to streamline development tasks. Below are the common commands you can use.
 
@@ -108,7 +104,7 @@ cargo make deploy-local          # Clean deploy locally
 cargo make api-test-health
 ```
 
-## ⭕ Technical Information
+## Technical Information
 
 Here are some technical details about the project:
 
