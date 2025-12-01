@@ -9,10 +9,9 @@ improved performance and reliability.
 This API provides information about Philippine holidays, including regular holidays, special non-working days, and more.
 The data is scraped from official government sources to ensure accuracy and up-to-date information.
 
+> 💠 This project is **not funded by any government and is entirely maintained by volunteers**. It is open-source and free to use. If you find it useful, please consider starring the repository or contributing to its development!
 
-> 🧪 **Note**: This project is currently in beta. While it is functional, there may be bugs or incomplete features. Use at your own risk. Please report any issues or feature requests on the GitHub repository. Contributions are welcome!
-
-> View Change Log [here](./CHANGELOG.md).
+> 🧪 **Note**: This project is currently in beta. While it is functional, there may be bugs or incomplete features. Use at your own risk. Please report any issues or feature requests on the GitHub repository. Contributions are welcome! View Change Log [here](./CHANGELOG.md).
 
 ## ⭕ API Endpoints
 
@@ -24,10 +23,16 @@ The data is scraped from official government sources to ensure accuracy and up-t
 - `PUT /holiday/{year}`: Update holidays for the specified year. This will re-scrape the data and update the stored
   information.
 
+## ⭕ Custom Integrations 
+
+- **NestJS**: A NestJS module is available for easy integration into NestJS applications. Check out the [ph-government-api](https://github.com/surelle-ha/ph-government-api).
+- **Express.js**: An Express.js middleware is available for easy integration into Express.js applications. Check out the [ph-government-api](https://github.com/surelle-ha/ph-government-api)
+- **Event Emitter**: Integration with Microservice Event Emitter for event-driven architectures. Check out the [microservice-event-emitter](https://github.com/surelle-ha/ph-government-api)
+
 ## ⭕ To Do List
 
-- [ ] Fix Dockerfile to use multi-stage builds for smaller image sizes
-- [ ] Add [`Render`](https://dashboard.render.com/blueprint/new) integration
+- [x] Fix Dockerfile to use multi-stage builds for smaller image sizes
+- [x] Add [`Render`](https://dashboard.render.com/blueprint/new) integration
 - [ ] Use SSE for long-running tasks like generating holidays
 - [ ] Disable direct push to `main` branch
 - [ ] Microservice Event Emitter integration (Port: 1212)
